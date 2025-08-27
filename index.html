@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Filtres d'Images</title>
+  <!-- Connexion de la police Days One avec support cyrillique -->
+  <link href="https://fonts.googleapis.com/css2?family=Days+One&display=swap&subset=cyrillic" rel="stylesheet" />
+  <!-- Connexion du CSS -->
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <h1>Filtres d'Images</h1>
+
+  <input type="file" id="upload" accept="image/*" />
+
+  <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+    <button onclick="selectFilter('asciiDither')">Tramage ASCII</button>
+    <button onclick="selectFilter('dotMatrix')">Matrice de Points</button>
+    <button onclick="selectFilter('braille')">Braille</button>
+    <button onclick="selectFilter('blockArt')">Art en Blocs</button>
+    <button onclick="selectFilter('lineArt')">Art Linéaire</button>
+    <button onclick="selectFilter('crosshatch')">Hachures Croisées</button>
+  </div>
+
+  <div>
+    <label for="slider">Intensité du Filtre :</label>
+    <input
+      type="range"
+      id="slider"
+      min="0"
+      max="1"
+      step="0.01"
+      value="0.5"
+      oninput="updateSliderValue('slider', 'sliderValue'); applyFilter(currentFilter, parseFloat(this.value))"
+    />
+    <span id="sliderValue">50</span>
+  </div>
+
+  <div id="charSelector">
+    <label for="asciiChar">Caractère :</label>
+    <select
+      id="asciiChar"
+      onchange="applyFilter(currentFilter, parseFloat(slider.value))"
+    >
+      <option value=".">.</option>
+      <option value="@">@</option>
+      <option value="o">o</option>
+      <option value="*">*</option>
+      <option value="+">+</option>
+      <option value="#">#</option>
+      <option value="x">x</option>
+      <option value="█">█</option>
+      <option value="▓">▓</option>
+      <option value="░">░</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="invertCheckbox">Inverser :</label>
+    <input
+      type="checkbox"
+      id="invertCheckbox"
+      onchange="applyFilter(currentFilter, parseFloat(slider.value))"
+    />
+  </div>
+
+  <div>
+    <label for="thresholdSlider">Seuil :</label>
+    <input
+      type="range"
+      id="thresholdSlider"
+      min="0"
+      max="255"
+      step="1"
+      value="128"
+      oninput="updateSliderValue('thresholdSlider', 'thresholdValue'); applyFilter(currentFilter, parseFloat(document.getElementById('slider').value))"
+    />
+    <span id="thresholdValue">50</span>
+  </div>
+
+  <div>
+    <label for="glowSlider">Lueur :</label>
+    <input
+      type="range"
+      id="glowSlider"
+      min="0"
+      max="1"
+      step="0.01"
+      value="0"
+      oninput="updateSliderValue('glowSlider', 'glowValue'); applyFilter(currentFilter, parseFloat(document.getElementById('slider').value))"
+    />
+    <span id="glowValue">0</span>
+  </div>
+
+  <button id="downloadBtn">Télécharger l'Image Traité</button>
+
+  <canvas id="canvas"></canvas>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>
